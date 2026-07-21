@@ -102,38 +102,36 @@ export default function Login() {
 
   return (
     <div
-      className="min-h-[100dvh] relative overflow-hidden flex flex-col"
+      className="h-[100dvh] relative overflow-hidden flex flex-col"
       style={{ fontFamily: 'Inter, sans-serif', background: '#FAFAFA' }}
     >
       {/* ─────────────────────────────────────────────────────────────
-          RESTAURANT PHOTO FLOUE — occupe TOUTE la zone header + titre
+          RESTAURANT PHOTO — flou léger, zone haute
           ───────────────────────────────────────────────────────────── */}
       <div
         className="absolute left-0 right-0 overflow-hidden pointer-events-none select-none"
-        style={{ top: 0, height: 340 }}
+        style={{ top: 0, height: 260 }}
       >
-        {/* Image élargie pour absorber le blur sans bords blancs */}
         <img
           src="/images/mcdo-restaurant.jpg"
           alt=""
           style={{
             position: 'absolute',
-            inset: '-24px',
-            width: 'calc(100% + 48px)',
-            height: 'calc(100% + 48px)',
+            inset: '-12px',
+            width: 'calc(100% + 24px)',
+            height: 'calc(100% + 24px)',
             objectFit: 'cover',
             objectPosition: 'center',
-            opacity: 0.55,
-            filter: 'blur(4px)',
+            opacity: 0.70,
+            filter: 'blur(2px)',
           }}
         />
-        {/* Dégradé : transparent en haut → blanc en bas (garde la lisibilité du formulaire) */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
             background:
-              'linear-gradient(180deg, rgba(250,250,250,0.15) 0%, rgba(250,250,250,0.35) 50%, rgba(250,250,250,1) 85%)',
+              'linear-gradient(180deg, rgba(250,250,250,0.10) 0%, rgba(250,250,250,0.25) 50%, rgba(250,250,250,1) 88%)',
           }}
         />
       </div>
@@ -142,96 +140,56 @@ export default function Login() {
       {/* Frites — bas gauche */}
       <div
         className="absolute bottom-0 left-0 pointer-events-none select-none overflow-hidden z-0"
-        style={{ width: 140, height: 180 }}
+        style={{ width: 110, height: 140 }}
       >
         <img
           src="/images/pack-classic.jpg"
           alt="Frites"
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: 'top center',
-            borderTopRightRadius: 20,
-          }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', borderTopRightRadius: 16 }}
         />
-        {/* fade droite */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(90deg, rgba(250,250,250,0) 55%, rgba(250,250,250,1) 100%)',
-            borderTopRightRadius: 20,
-          }}
-        />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(250,250,250,0) 50%, rgba(250,250,250,1) 100%)', borderTopRightRadius: 16 }} />
       </div>
 
       {/* Burger + Cup — bas droite */}
       <div
         className="absolute bottom-0 right-0 pointer-events-none select-none z-0"
-        style={{ width: 175, height: 190 }}
+        style={{ width: 145, height: 155 }}
       >
-        {/* Burger */}
         <img
           src="/images/pack-bigmac.jpg"
           alt="Burger"
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            right: 40,
-            width: 130,
-            height: 130,
-            objectFit: 'cover',
-            objectPosition: 'center',
-            borderTopLeftRadius: 20,
-          }}
+          style={{ position: 'absolute', bottom: 0, right: 32, width: 105, height: 105, objectFit: 'cover', objectPosition: 'center', borderTopLeftRadius: 16 }}
         />
-        {/* Cup Coca-Cola */}
         <img
           src="/images/mcdo-cup.png"
           alt="Coca-Cola"
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-            width: 78,
-            height: 120,
-            objectFit: 'contain',
-            objectPosition: 'bottom',
-          }}
+          style={{ position: 'absolute', bottom: 0, right: 0, width: 60, height: 95, objectFit: 'contain', objectPosition: 'bottom' }}
         />
-        {/* fade gauche */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(270deg, rgba(250,250,250,0) 50%, rgba(250,250,250,1) 100%)',
-          }}
-        />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(270deg, rgba(250,250,250,0) 45%, rgba(250,250,250,1) 100%)' }} />
       </div>
 
       {/* ── CONTENU PRINCIPAL ── */}
-      <div className="relative z-10 flex flex-col px-6 pt-12 pb-8">
+      <div className="relative z-10 flex flex-col px-6 pt-8 pb-4">
         {/* App icon */}
-        <div className="flex justify-center mb-5">
-          <AppIcon size={90} />
+        <div className="flex justify-center mb-3">
+          <AppIcon size={76} />
         </div>
 
         {/* Titre */}
-        <div className="text-center mb-4">
-          <h1 className="text-[30px] font-black text-[#111827] leading-tight mb-2">
+        <div className="text-center mb-3">
+          <h1 className="text-[26px] font-black text-[#111827] leading-tight mb-1">
             Bon retour <span>👋</span>
           </h1>
-          <p className="text-[14px] text-[#6B7280] font-medium">
+          <p className="text-[13px] text-[#6B7280] font-medium">
             Ravi de vous revoir parmi nous
           </p>
         </div>
 
-        {/* Zone restaurant visible : espace visuel entre titre et form */}
-        <div style={{ height: 110 }} />
+        {/* Zone restaurant visible — réduite */}
+        <div style={{ height: 60 }} />
 
         {/* Formulaire */}
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-2.5">
           <InputField
             icon={Phone}
             placeholder="Numéro de téléphone"
@@ -296,7 +254,7 @@ export default function Login() {
             whileTap={{ scale: 0.97 }}
             type="submit"
             disabled={loginMutation.isPending}
-            className="w-full h-[58px] rounded-[18px] flex items-center justify-between px-6 font-bold text-[16px] text-white"
+            className="w-full h-[52px] rounded-[16px] flex items-center justify-between px-6 font-bold text-[15px] text-white"
             style={{
               background: `linear-gradient(135deg, ${P1} 0%, ${P2} 100%)`,
               boxShadow: `0 8px 26px rgba(106,61,240,0.40)`,
@@ -314,7 +272,7 @@ export default function Login() {
         </form>
 
         {/* Divider */}
-        <div className="flex items-center gap-3 my-5">
+        <div className="flex items-center gap-3 my-3">
           <div className="flex-1 h-px bg-[#E5E7EB]" />
           <span className="text-[12px] font-medium text-[#9CA3AF]">ou continuer avec</span>
           <div className="flex-1 h-px bg-[#E5E7EB]" />
@@ -360,7 +318,7 @@ export default function Login() {
         </div>
 
         {/* Lien inscription — au-dessus des images food */}
-        <div className="mt-6 text-center" style={{ paddingBottom: 80 }}>
+        <div className="mt-3 text-center">
           <p className="text-[13px] font-medium text-[#6B7280]">
             Pas encore de compte ?{' '}
             <Link href="/register">

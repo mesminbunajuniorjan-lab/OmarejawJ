@@ -72,7 +72,7 @@ function InputField({
 }) {
   return (
     <div
-      className="flex items-center h-[54px] rounded-2xl px-4 gap-3 bg-white"
+      className="flex items-center h-[48px] rounded-2xl px-4 gap-3 bg-white"
       style={{ border: '1.5px solid #ECECF4', boxShadow: '0 2px 8px rgba(72,72,120,0.05)' }}
     >
       <Icon className="w-5 h-5 flex-shrink-0" style={{ color: iconColor }} strokeWidth={1.8} />
@@ -173,29 +173,29 @@ export default function Register() {
 
   return (
     <div
-      className="min-h-[100dvh] flex flex-col relative"
+      className="h-[100dvh] flex flex-col relative overflow-hidden"
       style={{ fontFamily: 'Inter, sans-serif', background: 'white' }}
     >
       {/* ═══════════════════════════════════════════════════════════
-          HERO HEADER — restaurant photo floutée + images food
+          HERO HEADER — restaurant peu flou + 1 burger + badge m centré
           ═══════════════════════════════════════════════════════════ */}
       <div
         className="relative flex-shrink-0 overflow-hidden"
-        style={{ height: 220 }}
+        style={{ height: 180 }}
       >
-        {/* ── Restaurant background floutée ── */}
+        {/* Restaurant background — flou léger */}
         <img
           src="/images/mcdo-restaurant.jpg"
           alt=""
           style={{
             position: 'absolute',
-            inset: '-24px',
-            width: 'calc(100% + 48px)',
-            height: 'calc(100% + 48px)',
+            inset: '-12px',
+            width: 'calc(100% + 24px)',
+            height: 'calc(100% + 24px)',
             objectFit: 'cover',
             objectPosition: 'center 40%',
-            opacity: 0.55,
-            filter: 'blur(4px)',
+            opacity: 0.70,
+            filter: 'blur(2px)',
           }}
         />
         {/* Overlay lavande → blanc */}
@@ -204,157 +204,103 @@ export default function Register() {
             position: 'absolute',
             inset: 0,
             background:
-              'linear-gradient(180deg, rgba(232,228,255,0.45) 0%, rgba(240,237,255,0.60) 55%, rgba(255,255,255,1) 100%)',
+              'linear-gradient(180deg, rgba(232,228,255,0.30) 0%, rgba(240,237,255,0.45) 60%, rgba(255,255,255,1) 100%)',
           }}
         />
 
-        {/* ── Bouton retour ── */}
+        {/* Bouton retour */}
         <button
           onClick={() => setLocation('/login')}
-          className="absolute top-4 left-4 w-9 h-9 rounded-full bg-white flex items-center justify-center z-20"
-          style={{ boxShadow: '0 2px 12px rgba(72,72,120,0.14)', border: '1px solid #ECECF4' }}
+          className="absolute top-3 left-3 w-8 h-8 rounded-full bg-white flex items-center justify-center z-20"
+          style={{ boxShadow: '0 2px 10px rgba(72,72,120,0.14)', border: '1px solid #ECECF4' }}
         >
           <ArrowLeft className="w-4 h-4 text-[#374151]" strokeWidth={2} />
         </button>
 
-        {/* ── App icon — milieu gauche (aligné verticalement au centre de l'en-tête) ── */}
-        <div className="absolute z-10" style={{ top: '50%', left: 20, transform: 'translateY(-50%)' }}>
-          <AppIcon size={76} />
+        {/* App icon — milieu gauche */}
+        <div className="absolute z-10" style={{ top: '50%', left: 16, transform: 'translateY(-50%)' }}>
+          <AppIcon size={68} />
         </div>
 
-        {/* ── Cluster food — droite ── */}
-        {/* Structure maquette : sac (bas-gauche), burger (haut-centre), frites (bas-droit)
-            + gobelet Coca sous les frites + badge "m" chevauchant le coin bas-droit du cluster */}
-        <div
+        {/* Burger seul — droite, centré verticalement */}
+        <img
+          src="/images/pack-bigmac.jpg"
+          alt="Burger"
           className="absolute z-10"
-          style={{ top: 10, right: 10, width: 210, height: 160 }}
+          style={{
+            top: '50%',
+            right: 24,
+            transform: 'translateY(-55%)',
+            width: 110,
+            height: 110,
+            objectFit: 'cover',
+            objectPosition: 'center',
+            borderRadius: 20,
+            boxShadow: '0 6px 20px rgba(0,0,0,0.22)',
+          }}
+        />
+
+        {/* Badge "m" McDonald's — centré horizontalement, bas de l'en-tête */}
+        <div
+          className="absolute z-20"
+          style={{
+            bottom: 10,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: 34,
+            height: 34,
+            borderRadius: 10,
+            background: '#DA291C',
+            boxShadow: '0 4px 12px rgba(218,41,28,0.45)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
         >
-          {/* Sac McDonald's — bas-gauche du cluster */}
-          <img
-            src="/images/empty-products.jpg"
-            alt="Sac"
-            style={{
-              position: 'absolute',
-              left: 0,
-              bottom: 32,
-              width: 68,
-              height: 82,
-              objectFit: 'cover',
-              objectPosition: 'center',
-              borderRadius: 12,
-              boxShadow: '0 4px 14px rgba(0,0,0,0.18)',
-            }}
-          />
-          {/* Burger Big Mac — haut-centre */}
-          <img
-            src="/images/pack-bigmac.jpg"
-            alt="Burger"
-            style={{
-              position: 'absolute',
-              left: 60,
-              top: 0,
-              width: 90,
-              height: 90,
-              objectFit: 'cover',
-              objectPosition: 'center',
-              borderRadius: 16,
-              boxShadow: '0 4px 16px rgba(0,0,0,0.20)',
-              zIndex: 2,
-            }}
-          />
-          {/* Frites — droite, légèrement plus bas */}
-          <img
-            src="/images/pack-classic.jpg"
-            alt="Frites"
-            style={{
-              position: 'absolute',
-              right: 0,
-              top: 20,
-              width: 68,
-              height: 80,
-              objectFit: 'cover',
-              objectPosition: 'top center',
-              borderRadius: 12,
-              boxShadow: '0 4px 14px rgba(0,0,0,0.16)',
-            }}
-          />
-          {/* Gobelet Coca-Cola — sous les frites, droite */}
-          <img
-            src="/images/mcdo-cup.png"
-            alt="Coca-Cola"
-            style={{
-              position: 'absolute',
-              right: 14,
-              bottom: 0,
-              width: 44,
-              height: 58,
-              objectFit: 'contain',
-              objectPosition: 'bottom',
-              filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.20))',
-            }}
-          />
-          {/* Badge "m" McDonald's — chevauchant le coin bas-droit du cluster (sur les frites) */}
-          <div
-            style={{
-              position: 'absolute',
-              right: -6,
-              bottom: 52,
-              width: 36,
-              height: 36,
-              borderRadius: 10,
-              background: '#DA291C',
-              boxShadow: '0 4px 12px rgba(218,41,28,0.45)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 5,
-            }}
-          >
-            <svg viewBox="0 0 24 24" width="20" height="20" fill={YLW}>
-              <path d="M2 20V6.5C2 4 3.8 2 6 2s3.5 1.6 4 3.8C10.5 3.6 11.8 2 14 2s4 2 4 4.5V20h-3.5V8c0-.8-.6-1.5-1.5-1.5s-1.5.7-1.5 1.5v12h-2V8c0-.8-.6-1.5-1.5-1.5S6.5 7.2 6.5 8v12H2z" />
-            </svg>
-          </div>
+          <svg viewBox="0 0 24 24" width="19" height="19" fill={YLW}>
+            <path d="M2 20V6.5C2 4 3.8 2 6 2s3.5 1.6 4 3.8C10.5 3.6 11.8 2 14 2s4 2 4 4.5V20h-3.5V8c0-.8-.6-1.5-1.5-1.5s-1.5.7-1.5 1.5v12h-2V8c0-.8-.6-1.5-1.5-1.5S6.5 7.2 6.5 8v12H2z" />
+          </svg>
         </div>
       </div>
 
       {/* ═══════════════════════════════════════════════════════════
-          FORMULAIRE
+          FORMULAIRE — compact pour tenir dans 100dvh
           ═══════════════════════════════════════════════════════════ */}
-      <div className="flex-1 px-5 pt-5 pb-8 overflow-y-auto">
+      <div className="flex-1 px-5 pt-3 pb-4 overflow-y-auto">
         {/* Titre */}
-        <div className="mb-5">
-          <h1 className="text-[28px] font-black text-[#111827] leading-tight">
+        <div className="mb-3">
+          <h1 className="text-[24px] font-black text-[#111827] leading-tight">
             Créer un compte <span>✨</span>
           </h1>
-          <p className="text-[13px] text-[#6B7280] font-medium mt-1">
+          <p className="text-[12px] text-[#6B7280] font-medium mt-0.5">
             Rejoignez-nous et commencez à investir
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-2.5">
           {/* Pays + téléphone */}
           <div className="flex gap-2">
             <button
               type="button"
               onClick={() => setShowCountrySheet(true)}
-              className="flex items-center gap-2 px-3 h-[54px] rounded-2xl bg-white flex-shrink-0"
+              className="flex items-center gap-1.5 px-3 h-[48px] rounded-2xl bg-white flex-shrink-0"
               style={{ border: '1.5px solid #ECECF4', boxShadow: '0 2px 8px rgba(72,72,120,0.05)' }}
             >
-              <span className="text-[20px] leading-none">{selectedCountry.flag}</span>
-              <ChevronDown className="w-3.5 h-3.5 text-[#6B7280]" strokeWidth={2.5} />
+              <span className="text-[18px] leading-none">{selectedCountry.flag}</span>
+              <ChevronDown className="w-3 h-3 text-[#6B7280]" strokeWidth={2.5} />
             </button>
             <div
-              className="flex-1 flex items-center h-[54px] rounded-2xl px-4 gap-2 bg-white"
+              className="flex-1 flex items-center h-[48px] rounded-2xl px-3 gap-2 bg-white"
               style={{ border: '1.5px solid #ECECF4', boxShadow: '0 2px 8px rgba(72,72,120,0.05)' }}
             >
-              <span className="text-[13px] font-semibold text-[#374151] flex-shrink-0">{selectedCountry.code}</span>
-              <div className="w-px h-5 bg-[#ECECF4]" />
+              <span className="text-[12px] font-semibold text-[#374151] flex-shrink-0">{selectedCountry.code}</span>
+              <div className="w-px h-4 bg-[#ECECF4]" />
               <input
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Numéro de téléphone"
-                className="flex-1 bg-transparent outline-none text-[14px] font-medium text-[#111827] placeholder:text-[#9CA3AF]"
+                className="flex-1 bg-transparent outline-none text-[13px] font-medium text-[#111827] placeholder:text-[#9CA3AF]"
                 style={{ fontFamily: 'Inter, sans-serif' }}
               />
             </div>
@@ -368,7 +314,7 @@ export default function Register() {
             onChange={setPassword}
             rightSlot={
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="text-[#9CA3AF]">
-                {showPassword ? <EyeOff className="w-5 h-5" strokeWidth={1.8} /> : <Eye className="w-5 h-5" strokeWidth={1.8} />}
+                {showPassword ? <EyeOff className="w-4 h-4" strokeWidth={1.8} /> : <Eye className="w-4 h-4" strokeWidth={1.8} />}
               </button>
             }
           />
@@ -381,7 +327,7 @@ export default function Register() {
             onChange={setConfirmPassword}
             rightSlot={
               <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="text-[#9CA3AF]">
-                {showConfirmPassword ? <EyeOff className="w-5 h-5" strokeWidth={1.8} /> : <Eye className="w-5 h-5" strokeWidth={1.8} />}
+                {showConfirmPassword ? <EyeOff className="w-4 h-4" strokeWidth={1.8} /> : <Eye className="w-4 h-4" strokeWidth={1.8} />}
               </button>
             }
           />
@@ -395,7 +341,7 @@ export default function Register() {
           />
 
           {/* Checkboxes */}
-          <div className="space-y-3 pt-1">
+          <div className="space-y-2 pt-0.5">
             <Checkbox
               checked={acceptTerms}
               onChange={() => setAcceptTerms(!acceptTerms)}
@@ -414,7 +360,7 @@ export default function Register() {
             whileTap={{ scale: 0.97 }}
             type="submit"
             disabled={registerMutation.isPending}
-            className="w-full h-[58px] rounded-[18px] flex items-center justify-between px-6 font-bold text-[16px] text-white mt-1"
+            className="w-full h-[52px] rounded-[16px] flex items-center justify-between px-6 font-bold text-[15px] text-white"
             style={{
               background: `linear-gradient(135deg, ${P1} 0%, ${P2} 100%)`,
               boxShadow: `0 8px 26px rgba(106,61,240,0.40)`,
@@ -431,7 +377,7 @@ export default function Register() {
           </motion.button>
         </form>
 
-        <div className="mt-5 text-center">
+        <div className="mt-3 text-center">
           <p className="text-[13px] font-medium text-[#6B7280]">
             Déjà un compte ?{' '}
             <Link href="/login">
