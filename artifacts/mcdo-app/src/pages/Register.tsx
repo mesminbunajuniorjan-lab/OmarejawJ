@@ -194,8 +194,8 @@ export default function Register() {
             height: 'calc(100% + 48px)',
             objectFit: 'cover',
             objectPosition: 'center 40%',
-            opacity: 0.30,
-            filter: 'blur(20px) saturate(0.7)',
+            opacity: 0.55,
+            filter: 'blur(4px)',
           }}
         />
         {/* Overlay lavande → blanc */}

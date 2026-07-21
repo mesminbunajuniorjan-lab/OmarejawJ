@@ -123,8 +123,8 @@ export default function Login() {
             height: 'calc(100% + 48px)',
             objectFit: 'cover',
             objectPosition: 'center',
-            opacity: 0.28,
-            filter: 'blur(18px)',
+            opacity: 0.55,
+            filter: 'blur(4px)',
           }}
         />
         {/* Dégradé : transparent en haut → blanc en bas (garde la lisibilité du formulaire) */}
