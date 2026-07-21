@@ -41,9 +41,9 @@ export default function RechargeHistory() {
                 <div key={tx.id} className="bg-white rounded-[20px] p-4 shadow-sm border border-gray-100 flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                      isSuccess ? 'bg-green-50 text-green-500' :
+                      isSuccess ? 'bg-green-50 text-green-600' :
                       isPending ? 'bg-orange-50 text-orange-500' :
-                      'bg-red-50 text-red-500'
+                      'bg-purple-50 text-red-500'
                     }`}>
                       {isSuccess ? <CheckCircle2 className="w-6 h-6" /> :
                        isPending ? <Clock className="w-6 h-6" /> :
@@ -59,7 +59,7 @@ export default function RechargeHistory() {
                   <div className="text-right">
                     <p className="font-bold text-gray-900 text-lg">+{tx.amount.toLocaleString('fr-FR')}</p>
                     <p className={`text-xs font-bold mt-0.5 ${
-                      isSuccess ? 'text-green-500' :
+                      isSuccess ? 'text-green-600' :
                       isPending ? 'text-orange-500' :
                       'text-red-500'
                     }`}>

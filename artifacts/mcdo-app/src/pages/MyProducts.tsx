@@ -23,7 +23,7 @@ export default function MyProducts() {
 
       <div className="px-4 pt-2 space-y-3">
         {/* Info banner */}
-        <div className="bg-red-50 border border-red-100 rounded-[14px] px-3 py-2 flex items-start gap-2">
+        <div className="bg-purple-50 border border-purple-100 rounded-[14px] px-3 py-2 flex items-start gap-2">
           <Info className="w-4 h-4 text-mcdo-red shrink-0 mt-0.5" />
           <p className="text-mcdo-red text-[11px] font-medium leading-tight">
             Les revenus de vos produits sont réglés automatiquement toutes les 24 heures.
@@ -34,7 +34,7 @@ export default function MyProducts() {
         {/* Stats bar */}
         <div className="flex gap-2">
           <div className="flex-1 bg-white rounded-[14px] px-3 py-2.5 shadow-sm flex items-center gap-2">
-            <div className="w-7 h-7 bg-red-50 rounded-lg flex items-center justify-center shrink-0">
+            <div className="w-7 h-7 bg-purple-50 rounded-lg flex items-center justify-center shrink-0">
               <ShoppingBag className="w-4 h-4 text-mcdo-red" />
             </div>
             <div>
@@ -45,7 +45,7 @@ export default function MyProducts() {
             </div>
           </div>
           <div className="flex-1 bg-white rounded-[14px] px-3 py-2.5 shadow-sm flex items-center gap-2">
-            <div className="w-7 h-7 bg-red-50 rounded-lg flex items-center justify-center shrink-0">
+            <div className="w-7 h-7 bg-purple-50 rounded-lg flex items-center justify-center shrink-0">
               <ShoppingBag className="w-4 h-4 text-gray-500" />
             </div>
             <div>

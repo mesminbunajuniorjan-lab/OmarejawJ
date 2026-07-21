@@ -115,13 +115,13 @@ export default function Account() {
         {/* Disconnect */}
         <button
           onClick={logout}
-          className="w-full bg-white border border-red-100 rounded-[16px] py-3 flex items-center justify-between px-4 shadow-sm"
+          className="w-full bg-white border border-purple-100 rounded-[16px] py-3 flex items-center justify-between px-4 shadow-sm"
         >
           <div className="flex items-center gap-3">
             <LogOut className="w-4 h-4 text-mcdo-red" />
             <span className="text-mcdo-red font-bold text-sm">Déconnexion</span>
           </div>
-          <ChevronRight className="w-4 h-4 text-red-300" />
+          <ChevronRight className="w-4 h-4 text-purple-300" />
         </button>
       </div>
     </div>

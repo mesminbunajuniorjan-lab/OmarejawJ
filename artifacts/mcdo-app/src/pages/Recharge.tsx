@@ -90,7 +90,7 @@ export default function Recharge() {
               key={country.code}
               className={`flex items-center justify-between px-4 py-2.5 cursor-pointer transition-colors ${
                 i < COUNTRIES.length - 1 ? 'border-b border-gray-50' : ''
-              } ${selectedCountry === country.code ? 'bg-red-50/50' : 'hover:bg-gray-50'}`}
+              } ${selectedCountry === country.code ? 'bg-purple-50/50' : 'hover:bg-gray-50'}`}
             >
               <div className="flex items-center gap-2">
                 <span className="text-xl">{country.flag}</span>

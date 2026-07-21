@@ -111,7 +111,7 @@ export default function Withdraw() {
               'Assurez-vous d\'avoir au moins un appareil actif pour effectuer un retrait.',
             ].map((item, i) => (
               <li key={i} className="flex items-start gap-2 text-[11px] text-gray-500">
-                <span className="w-4 h-4 rounded-full bg-red-50 text-mcdo-red flex items-center justify-center text-[9px] font-bold shrink-0 mt-0.5">{i + 1}</span>
+                <span className="w-4 h-4 rounded-full bg-purple-50 text-mcdo-red flex items-center justify-center text-[9px] font-bold shrink-0 mt-0.5">{i + 1}</span>
                 <span>{item}</span>
               </li>
             ))}

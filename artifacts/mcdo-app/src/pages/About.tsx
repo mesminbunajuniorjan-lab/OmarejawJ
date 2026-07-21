@@ -24,7 +24,7 @@ export default function About() {
           </p>
 
           <div className="space-y-4">
-            <div className="bg-[#FFF0EF] border border-red-100 rounded-[16px] p-4 flex gap-4">
+            <div className="bg-[#FFF0EF] border border-purple-100 rounded-[16px] p-4 flex gap-4">
               <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
                 <ShieldCheck className="w-5 h-5 text-mcdo-red" />
               </div>
@@ -34,7 +34,7 @@ export default function About() {
               </div>
             </div>
 
-            <div className="bg-[#FFF0EF] border border-red-100 rounded-[16px] p-4 flex gap-4">
+            <div className="bg-[#FFF0EF] border border-purple-100 rounded-[16px] p-4 flex gap-4">
               <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
                 <Eye className="w-5 h-5 text-mcdo-red" />
               </div>
@@ -44,7 +44,7 @@ export default function About() {
               </div>
             </div>
 
-            <div className="bg-[#FFF0EF] border border-red-100 rounded-[16px] p-4 flex gap-4">
+            <div className="bg-[#FFF0EF] border border-purple-100 rounded-[16px] p-4 flex gap-4">
               <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
                 <Clock className="w-5 h-5 text-mcdo-red" />
               </div>

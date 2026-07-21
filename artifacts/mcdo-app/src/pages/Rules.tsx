@@ -63,19 +63,19 @@ export default function Rules() {
         
         <div className="bg-white rounded-[24px] p-6 shadow-card space-y-4 text-sm text-gray-600 font-medium">
           <div className="flex gap-3">
-            <div className="w-6 h-6 rounded-full bg-red-100 text-mcdo-red flex items-center justify-center font-bold flex-shrink-0 mt-0.5 text-xs">1</div>
+            <div className="w-6 h-6 rounded-full bg-purple-100 text-mcdo-red flex items-center justify-center font-bold flex-shrink-0 mt-0.5 text-xs">1</div>
             <p>Les revenus sont calculés et versés toutes les 24 heures après l'achat du pack.</p>
           </div>
           <div className="flex gap-3">
-            <div className="w-6 h-6 rounded-full bg-red-100 text-mcdo-red flex items-center justify-center font-bold flex-shrink-0 mt-0.5 text-xs">2</div>
+            <div className="w-6 h-6 rounded-full bg-purple-100 text-mcdo-red flex items-center justify-center font-bold flex-shrink-0 mt-0.5 text-xs">2</div>
             <p>Vous pouvez acheter plusieurs packs simultanément pour augmenter vos revenus quotidiens.</p>
           </div>
           <div className="flex gap-3">
-            <div className="w-6 h-6 rounded-full bg-red-100 text-mcdo-red flex items-center justify-center font-bold flex-shrink-0 mt-0.5 text-xs">3</div>
+            <div className="w-6 h-6 rounded-full bg-purple-100 text-mcdo-red flex items-center justify-center font-bold flex-shrink-0 mt-0.5 text-xs">3</div>
             <p>Les retraits sont soumis à des frais de 20% et sont traités entre 9h et 18h.</p>
           </div>
           <div className="flex gap-3">
-            <div className="w-6 h-6 rounded-full bg-red-100 text-mcdo-red flex items-center justify-center font-bold flex-shrink-0 mt-0.5 text-xs">4</div>
+            <div className="w-6 h-6 rounded-full bg-purple-100 text-mcdo-red flex items-center justify-center font-bold flex-shrink-0 mt-0.5 text-xs">4</div>
             <p>Le programme de parrainage vous permet de gagner 36% sur le niveau 1, 1% sur le niveau 2 et 1% sur le niveau 3.</p>
           </div>
         </div>

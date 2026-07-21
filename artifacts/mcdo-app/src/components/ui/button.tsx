@@ -12,7 +12,7 @@ const buttonVariants = cva(
         default: "bg-mcdo-red text-white hover:opacity-90 shadow-mcdo",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline: "border-2 border-gray-200 text-gray-700 hover:border-mcdo-red hover:text-mcdo-red",
-        secondary: "bg-[#F6F7FB] text-mcdo-red hover:bg-red-50",
+        secondary: "bg-[#F6F7FB] text-mcdo-red hover:bg-purple-50",
         ghost: "hover:bg-[#F6F7FB] hover:text-mcdo-red",
         link: "text-mcdo-red underline-offset-4 hover:underline",
         primary: "gradient-red text-white shadow-mcdo",

@@ -22,7 +22,7 @@ export default function BankAccounts() {
         title="Comptes bancaires" 
         rightAction={
           <Link href="/add-bank">
-            <button className="w-10 h-10 flex items-center justify-center bg-red-50 text-mcdo-red rounded-xl hover:bg-red-100 transition-colors">
+            <button className="w-10 h-10 flex items-center justify-center bg-purple-50 text-mcdo-red rounded-xl hover:bg-purple-100 transition-colors">
               <Plus className="w-5 h-5" />
             </button>
           </Link>
@@ -32,7 +32,7 @@ export default function BankAccounts() {
       <div className="px-4 py-4">
         {!bankAccounts || bankAccounts.length === 0 ? (
           <div className="bg-white rounded-[24px] p-8 shadow-card border border-gray-50 text-center flex flex-col items-center mt-8">
-            <div className="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mb-6">
+            <div className="w-24 h-24 bg-purple-50 rounded-full flex items-center justify-center mb-6">
               <Landmark className="w-10 h-10 text-mcdo-red" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Aucun compte bancaire</h3>
@@ -61,7 +61,7 @@ export default function BankAccounts() {
                 
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center">
+                    <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center">
                       <Landmark className="w-6 h-6 text-mcdo-red" />
                     </div>
                     <div>

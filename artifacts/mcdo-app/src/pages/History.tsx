@@ -92,14 +92,14 @@ export default function History() {
               if (tx.type === 'recharge') {
                 Icon = ArrowDownToLine;
                 iconBg = 'bg-green-50';
-                iconColor = 'text-green-500';
+                iconColor = 'text-green-600';
               } else if (tx.type === 'withdraw') {
                 Icon = ArrowUpFromLine;
                 iconBg = 'bg-orange-50';
                 iconColor = 'text-orange-500';
               } else if (tx.type === 'income' || tx.type === 'commission' || tx.type === 'reward') {
                 Icon = Banknote;
-                iconBg = 'bg-red-50';
+                iconBg = 'bg-purple-50';
                 iconColor = 'text-mcdo-red';
               }
 
@@ -128,11 +128,11 @@ export default function History() {
                       {isPositive ? '+' : '-'}{tx.amount.toLocaleString('fr-FR')}
                     </p>
                     <div className="flex items-center justify-end gap-1 mt-0.5">
-                      {isSuccess ? <CheckCircle2 className="w-3 h-3 text-green-500" /> :
+                      {isSuccess ? <CheckCircle2 className="w-3 h-3 text-green-600" /> :
                        isPending ? <Clock className="w-3 h-3 text-orange-500" /> :
                        <XCircle className="w-3 h-3 text-red-500" />}
                       <p className={`text-[10px] font-bold uppercase ${
-                        isSuccess ? 'text-green-500' :
+                        isSuccess ? 'text-green-600' :
                         isPending ? 'text-orange-500' :
                         'text-red-500'
                       }`}>

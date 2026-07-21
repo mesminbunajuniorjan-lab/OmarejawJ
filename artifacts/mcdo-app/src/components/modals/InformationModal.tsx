@@ -49,7 +49,7 @@ export function InformationModal({ isOpen, onClose }: InformationModalProps) {
                 <p>
                   Nous sommes heureux de vous compter parmi nos investisseurs.
                 </p>
-                <div className="bg-red-50 p-4 rounded-2xl text-mcdo-red border border-red-100">
+                <div className="bg-purple-50 p-4 rounded-2xl text-mcdo-red border border-purple-100">
                   <ul className="space-y-2">
                     <li className="flex gap-2">
                       <span className="font-bold">•</span>

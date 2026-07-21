@@ -74,14 +74,14 @@ export default function Checkin() {
                 <div key={day} className="flex flex-col items-center gap-2">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
                     isChecked 
-                      ? 'bg-green-100 text-green-500' 
+                      ? 'bg-green-100 text-green-600' 
                       : isToday && !status?.checkedInToday
-                        ? 'bg-red-50 text-mcdo-red border-2 border-mcdo-red border-dashed'
+                        ? 'bg-purple-50 text-mcdo-red border-2 border-mcdo-red border-dashed'
                         : 'bg-[#F6F7FB] text-gray-400'
                   }`}>
                     {isChecked ? <Check className="w-5 h-5" strokeWidth={3} /> : <span className="text-sm font-bold">{day}</span>}
                   </div>
-                  <span className={`text-[10px] font-bold ${isChecked ? 'text-green-500' : 'text-gray-400'}`}>Jour {day}</span>
+                  <span className={`text-[10px] font-bold ${isChecked ? 'text-green-600' : 'text-gray-400'}`}>Jour {day}</span>
                 </div>
               );
             })}
@@ -121,15 +121,15 @@ export default function Checkin() {
           <h3 className="font-bold text-gray-900 mb-4">Comment ça marche ?</h3>
           <ul className="space-y-4 text-sm text-gray-600 font-medium">
             <li className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-red-50 text-mcdo-red flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">1</div>
+              <div className="w-6 h-6 rounded-full bg-purple-50 text-mcdo-red flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">1</div>
               <p>Connectez-vous tous les jours pour effectuer votre pointage et recevoir une récompense.</p>
             </li>
             <li className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-red-50 text-mcdo-red flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">2</div>
+              <div className="w-6 h-6 rounded-full bg-purple-50 text-mcdo-red flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">2</div>
               <p>Si vous manquez un jour, la série est réinitialisée et vous recommencez au jour 1.</p>
             </li>
             <li className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-red-50 text-mcdo-red flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">3</div>
+              <div className="w-6 h-6 rounded-full bg-purple-50 text-mcdo-red flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">3</div>
               <p>Les récompenses gagnées s'ajoutent automatiquement à votre solde retirable.</p>
             </li>
           </ul>

@@ -42,7 +42,7 @@ export default function Support() {
           <a href="https://wa.me/22900000000" target="_blank" rel="noreferrer" className="block">
             <motion.div whileTap={{ scale: 0.98 }} className="bg-white rounded-[20px] p-4 shadow-card flex items-center gap-4">
               <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center">
-                <MessageCircle className="w-6 h-6 text-green-500" />
+                <MessageCircle className="w-6 h-6 text-green-600" />
               </div>
               <div className="flex-1">
                 <h3 className="font-bold text-gray-900">WhatsApp</h3>
@@ -53,7 +53,7 @@ export default function Support() {
 
           <a href="mailto:support@mcdoinvest.com" className="block">
             <motion.div whileTap={{ scale: 0.98 }} className="bg-white rounded-[20px] p-4 shadow-card flex items-center gap-4">
-              <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center">
                 <Mail className="w-6 h-6 text-mcdo-red" />
               </div>
               <div className="flex-1">
