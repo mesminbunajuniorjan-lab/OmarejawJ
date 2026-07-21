@@ -1,19 +1,11 @@
 import React from 'react';
 import { Link } from 'wouter';
-import { Bell, ArrowDownToLine, History, CalendarCheck, Users, Loader2 } from 'lucide-react';
+import { Bell, ArrowDownToLine, History, CalendarCheck, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useGetUserStats } from '@workspace/api-client-react';
 
 export default function Home() {
   const { data: stats, isLoading } = useGetUserStats();
-
-  if (isLoading || !stats) {
-    return (
-      <div className="flex items-center justify-center min-h-[100dvh]">
-        <Loader2 className="w-7 h-7 animate-spin text-mcdo-red" />
-      </div>
-    );
-  }
 
   const quickActions = [
     { icon: ArrowDownToLine, label: 'Retrait', href: '/withdraw' },
@@ -45,7 +37,7 @@ export default function Home() {
           <div>
             <p className="text-white/75 text-xs font-medium">Solde du compte</p>
             <p className="text-2xl font-black tracking-tight">
-              {stats.balance.toLocaleString('fr-FR')} <span className="text-sm font-bold">XOF</span>
+              {(stats?.balance ?? 0).toLocaleString('fr-FR')} <span className="text-sm font-bold">XOF</span>
             </p>
           </div>
           <Link href="/recharge">
@@ -105,10 +97,10 @@ export default function Home() {
           <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Aperçu</p>
           <div className="grid grid-cols-2 gap-2">
             {[
-              { label: 'Revenu total', value: stats.totalEarned, unit: 'XOF', color: 'text-mcdo-red' },
-              { label: 'Invest. total', value: stats.activeProducts, unit: 'Pack(s)', color: 'text-gray-900' },
-              { label: 'Membres équipe', value: stats.totalInvited, unit: '', color: 'text-gray-900' },
-              { label: 'Récompenses', value: stats.totalRewards, unit: 'XOF', color: 'text-mcdo-yellow' },
+              { label: 'Revenu total', value: stats?.totalEarned ?? 0, unit: 'XOF', color: 'text-mcdo-red' },
+              { label: 'Invest. total', value: stats?.activeProducts ?? 0, unit: 'Pack(s)', color: 'text-gray-900' },
+              { label: 'Membres équipe', value: stats?.totalInvited ?? 0, unit: '', color: 'text-gray-900' },
+              { label: 'Récompenses', value: stats?.totalRewards ?? 0, unit: 'XOF', color: 'text-mcdo-yellow' },
             ].map((item, i) => (
               <div key={i} className="bg-white border border-gray-100 rounded-[16px] px-3 py-2.5 shadow-sm">
                 <p className="text-gray-400 text-[10px] font-medium mb-0.5">{item.label}</p>
