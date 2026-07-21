@@ -1,188 +1,161 @@
 import React, { useState } from 'react';
 import { PageHeader } from '../components/shared/PageHeader';
 import { useGetUserStats, useRecharge } from '@workspace/api-client-react';
-import { Wallet, CreditCard, Info, Loader2, ChevronRight, Check } from 'lucide-react';
+import { Wallet, Loader2, ChevronRight, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { useLocation, Link } from 'wouter';
 
-const PRESETS = [5000, 15000, 30000, 60000, 100000, 250000];
+const PRESETS = [5000, 15000, 30000];
 
 const COUNTRIES = [
-  { code: '+225', name: 'Côte d\'Ivoire', flag: '🇨🇮' },
-  { code: '+237', name: 'Cameroun', flag: '🇨🇲' },
-  { code: '+226', name: 'Burkina Faso', flag: '🇧🇫' },
-  { code: '+229', name: 'Bénin', flag: '🇧🇯' },
-  { code: '+221', name: 'Sénégal', flag: '🇸🇳' },
-  { code: '+223', name: 'Mali', flag: '🇲🇱' },
-  { code: '+227', name: 'Niger', flag: '🇳🇪' },
-  { code: '+228', name: 'Togo', flag: '🇹🇬' },
+  { code: 'CM', dial: '+237', name: 'Cameroun', flag: '🇨🇲' },
+  { code: 'BF', dial: '+226', name: 'Burkina Faso', flag: '🇧🇫' },
+  { code: 'CI', dial: '+225', name: 'Côte d\'Ivoire', flag: '🇨🇮' },
+  { code: 'BJ', dial: '+229', name: 'Bénin', flag: '🇧🇯' },
+  { code: 'SN', dial: '+221', name: 'Sénégal', flag: '🇸🇳' },
+  { code: 'ML', dial: '+223', name: 'Mali', flag: '🇲🇱' },
+  { code: 'NE', dial: '+227', name: 'Niger', flag: '🇳🇪' },
+  { code: 'TG', dial: '+228', name: 'Togo', flag: '🇹🇬' },
 ];
 
 export default function Recharge() {
   const [, setLocation] = useLocation();
   const { data: stats } = useGetUserStats();
   const rechargeMutation = useRecharge();
-  
-  const [amount, setAmount] = useState<string>('');
-  const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0].code);
+  const [amount, setAmount] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState('CM');
 
   const handleRecharge = async () => {
-    const numAmount = Number(amount);
-    if (!numAmount || numAmount < 5000) {
-      toast.error('Le montant minimum est de 5,000 XOF');
-      return;
-    }
-
+    const num = Number(amount);
+    if (!num || num < 5000) { toast.error('Montant minimum: 5 000 XOF'); return; }
     try {
-      await rechargeMutation.mutateAsync({
-        data: {
-          amount: numAmount,
-          method: 'mobile_money',
-          countryCode: selectedCountry
-        }
-      });
-      toast.success('Demande de recharge initiée. Vous allez être redirigé vers la page de paiement.');
+      const country = COUNTRIES.find(c => c.code === selectedCountry);
+      await rechargeMutation.mutateAsync({ data: { amount: num, method: 'mobile_money', countryCode: country?.dial } });
+      toast.success('Demande de recharge initiée !');
       setLocation('/recharge-history');
-    } catch (error: any) {
-      toast.error(error.message || 'Erreur lors de la recharge');
-    }
+    } catch (e: any) { toast.error(e.message || 'Erreur'); }
   };
 
   return (
-    <div className="pb-8 min-h-[100dvh] bg-[#F6F7FB]">
+    <div className="pb-8 bg-[#F6F7FB]">
       <PageHeader title="Rechargement" />
 
-      <div className="px-4 py-4">
+      <div className="px-4 pt-3 space-y-3">
         {/* Balance Card */}
-        <div className="gradient-red rounded-[24px] p-6 text-white shadow-mcdo mb-6 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/4" />
-          <div className="flex justify-between items-start relative z-10">
-            <div>
-              <p className="text-white/80 font-medium mb-1">Solde disponible</p>
-              <h2 className="text-3xl font-extrabold tracking-tight">
-                {stats?.balance.toLocaleString('fr-FR') || 0} <span className="text-xl font-bold">XOF</span>
-              </h2>
-            </div>
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-              <Wallet className="w-5 h-5 text-white" />
-            </div>
+        <div className="gradient-red rounded-[18px] px-4 py-3 text-white flex items-center justify-between shadow-mcdo">
+          <div>
+            <p className="text-white/70 text-[10px] font-medium">Solde disponible</p>
+            <p className="text-2xl font-black">{(stats?.balance ?? 0).toLocaleString('fr-FR')} <span className="text-sm font-bold">XOF</span></p>
+          </div>
+          <div className="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center">
+            <Wallet className="w-5 h-5 text-white" />
           </div>
         </div>
 
-        {/* Amount Input */}
-        <div className="bg-white rounded-[24px] p-5 shadow-card mb-6">
-          <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <div className="w-2 h-6 bg-mcdo-yellow rounded-full" />
-            Montant de la recharge
-          </h3>
-          
-          <div className="relative mb-6">
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="w-full h-[60px] bg-[#F6F7FB] border-0 rounded-[16px] pl-4 pr-16 text-2xl font-bold text-gray-900 focus:ring-2 focus:ring-mcdo-red transition-all"
-              placeholder="0"
-            />
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-gray-400">
-              XOF
-            </div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-3">
-            {PRESETS.map((preset) => (
+        {/* Amount */}
+        <div className="bg-white rounded-[18px] px-4 py-3 shadow-sm">
+          <p className="text-xs font-bold text-gray-700 mb-2">Montant</p>
+          <input
+            type="number"
+            value={amount}
+            onChange={e => setAmount(e.target.value)}
+            placeholder="Saisissez un montant"
+            className="w-full h-[44px] bg-[#F6F7FB] rounded-[12px] px-3 text-gray-900 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-mcdo-red"
+          />
+          <div className="flex gap-2 mt-2">
+            {PRESETS.map(p => (
               <button
-                key={preset}
-                onClick={() => setAmount(preset.toString())}
-                className={`h-[48px] rounded-[14px] font-bold text-sm transition-all ${
-                  amount === preset.toString()
-                    ? 'gradient-red text-white shadow-md'
-                    : 'bg-[#F6F7FB] text-gray-600 hover:bg-gray-100'
+                key={p}
+                onClick={() => setAmount(p.toString())}
+                className={`flex-1 py-1.5 text-xs font-bold rounded-[10px] border transition-colors ${
+                  amount === p.toString()
+                    ? 'bg-mcdo-red text-white border-mcdo-red'
+                    : 'bg-[#F6F7FB] text-gray-700 border-gray-200'
                 }`}
               >
-                {preset.toLocaleString('fr-FR')}
+                {p.toLocaleString('fr-FR')}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Payment Method */}
-        <div className="bg-white rounded-[24px] p-5 shadow-card mb-6">
-          <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <div className="w-2 h-6 bg-mcdo-red rounded-full" />
-            Mode de paiement
-          </h3>
-          
-          <div className="space-y-3">
-            {COUNTRIES.map((country) => (
-              <label 
-                key={country.code}
-                className={`flex items-center justify-between p-4 rounded-[16px] border-2 cursor-pointer transition-all ${
-                  selectedCountry === country.code 
-                    ? 'border-mcdo-red bg-red-50/50' 
-                    : 'border-transparent bg-[#F6F7FB] hover:bg-gray-100'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{country.flag}</span>
-                  <span className="font-semibold text-gray-900">{country.name}</span>
-                </div>
-                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                  selectedCountry === country.code ? 'border-mcdo-red bg-mcdo-red' : 'border-gray-300'
-                }`}>
-                  {selectedCountry === country.code && <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />}
-                </div>
-                <input 
-                  type="radio" 
-                  name="country" 
+        {/* Country Selection */}
+        <div className="bg-white rounded-[18px] overflow-hidden shadow-sm">
+          <div className="px-4 py-2 border-b border-gray-50">
+            <p className="text-xs font-bold text-gray-700">Mode de paiement</p>
+          </div>
+          {COUNTRIES.map((country, i) => (
+            <label
+              key={country.code}
+              className={`flex items-center justify-between px-4 py-2.5 cursor-pointer transition-colors ${
+                i < COUNTRIES.length - 1 ? 'border-b border-gray-50' : ''
+              } ${selectedCountry === country.code ? 'bg-red-50/50' : 'hover:bg-gray-50'}`}
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-xl">{country.flag}</span>
+                <span className={`text-sm font-semibold ${selectedCountry === country.code ? 'text-mcdo-red' : 'text-gray-700'}`}>
+                  {country.name}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                {selectedCountry === country.code && (
+                  <Check className="w-4 h-4 text-mcdo-red" strokeWidth={3} />
+                )}
+                <input
+                  type="radio"
+                  name="country"
                   value={country.code}
                   checked={selectedCountry === country.code}
-                  onChange={(e) => setSelectedCountry(e.target.value)}
-                  className="hidden"
+                  onChange={() => setSelectedCountry(country.code)}
+                  className="sr-only"
                 />
-              </label>
-            ))}
-          </div>
+              </div>
+            </label>
+          ))}
         </div>
 
+        {/* Confirm Button */}
         <motion.button
           whileTap={{ scale: 0.97 }}
           onClick={handleRecharge}
           disabled={rechargeMutation.isPending}
-          className="w-full h-[58px] gradient-red text-white font-bold rounded-[18px] text-lg shadow-mcdo flex items-center justify-center mb-6 disabled:opacity-70"
+          className="w-full h-[52px] gradient-red text-white font-bold rounded-[16px] shadow-mcdo flex items-center justify-center text-base disabled:opacity-70"
         >
-          {rechargeMutation.isPending ? <Loader2 className="w-6 h-6 animate-spin" /> : 'Confirmer la recharge'}
+          {rechargeMutation.isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Confirmer'}
         </motion.button>
 
         <Link href="/support">
-          <div className="flex items-center justify-center gap-2 text-mcdo-red font-medium mb-8 cursor-pointer hover:underline">
-            <span>Rechargement en retard ? Cliquez ici</span>
-            <ChevronRight className="w-4 h-4" />
-          </div>
+          <p className="text-center text-mcdo-red text-xs font-semibold flex items-center justify-center gap-1 py-1">
+            Rechargement en retard ? Cliquez ici <ChevronRight className="w-3 h-3" />
+          </p>
         </Link>
 
-        {/* Info Rules */}
-        <div className="bg-white rounded-[24px] p-5 shadow-card">
-          <div className="flex items-center gap-2 mb-4">
-            <Info className="w-5 h-5 text-mcdo-yellow" />
-            <h3 className="font-bold text-gray-900">Informations importantes</h3>
-          </div>
-          
-          <ul className="space-y-3 text-sm text-gray-600 font-medium">
-            <li className="flex items-start gap-2">
-              <span className="w-5 h-5 rounded-full bg-red-100 text-mcdo-red flex items-center justify-center flex-shrink-0 text-xs font-bold mt-0.5">1</span>
-              <p>Le montant minimum de recharge est de 5,000 XOF.</p>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="w-5 h-5 rounded-full bg-red-100 text-mcdo-red flex items-center justify-center flex-shrink-0 text-xs font-bold mt-0.5">2</span>
-              <p>Veuillez vérifier attentivement le numéro de compte avant de confirmer le paiement.</p>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="w-5 h-5 rounded-full bg-red-100 text-mcdo-red flex items-center justify-center flex-shrink-0 text-xs font-bold mt-0.5">3</span>
-              <p>Si la recharge n'arrive pas dans les 10 minutes, contactez le service client.</p>
-            </li>
+        {/* Info */}
+        <div className="bg-white rounded-[18px] px-4 py-3 shadow-sm">
+          <p className="text-xs font-bold text-gray-700 mb-2 flex items-center gap-1.5">
+            <span className="w-1 h-4 bg-gray-300 rounded-full inline-block" />
+            Informations importantes
+          </p>
+          <ul className="space-y-1.5">
+            {[
+              'Montant minimum de recharge: 5 000 XOF.',
+              'Les recharges inférieures à ce montant ne sont pas créditées.',
+              'Utilisez toujours votre numéro de compte le plus récent.',
+              'Suivez attentivement les instructions de paiement.',
+              'En cas de problème, contactez le service client.',
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-[11px] text-gray-500">
+                <span className="text-gray-400 font-bold shrink-0">{i + 1}.</span>
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
+        </div>
+
+        {/* Fries Image */}
+        <div className="h-[100px] rounded-[16px] overflow-hidden">
+          <img src="/images/pack-classic.jpg" alt="frites" className="w-full h-full object-cover" />
         </div>
       </div>
     </div>

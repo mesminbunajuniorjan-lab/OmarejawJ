@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageHeader } from '../components/shared/PageHeader';
 import { useGetMyProducts, useGetUserStats } from '@workspace/api-client-react';
-import { Loader2, Info } from 'lucide-react';
+import { Loader2, Info, ShoppingBag } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'wouter';
 
@@ -12,101 +12,105 @@ export default function MyProducts() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[100dvh]">
-        <Loader2 className="w-8 h-8 animate-spin text-mcdo-red" />
+        <Loader2 className="w-7 h-7 animate-spin text-mcdo-red" />
       </div>
     );
   }
 
   return (
-    <div className="pb-24 min-h-[100dvh] bg-[#F6F7FB]">
+    <div className="pb-24 bg-[#F6F7FB]">
       <PageHeader title="Mes Produits" />
 
-      <div className="px-4 py-4">
-        <div className="bg-red-50 border border-red-100 rounded-[16px] p-3 flex items-start gap-3 mb-6">
-          <Info className="w-5 h-5 text-mcdo-red flex-shrink-0 mt-0.5" />
-          <p className="text-mcdo-red text-sm font-medium">
-            Les revenus de vos investissements sont réglés automatiquement toutes les 24 heures après l'heure d'achat.
+      <div className="px-4 pt-2 space-y-3">
+        {/* Info banner */}
+        <div className="bg-red-50 border border-red-100 rounded-[14px] px-3 py-2 flex items-start gap-2">
+          <Info className="w-4 h-4 text-mcdo-red shrink-0 mt-0.5" />
+          <p className="text-mcdo-red text-[11px] font-medium leading-tight">
+            Les revenus de vos produits sont réglés automatiquement toutes les 24 heures.
+            Vous pouvez acheter plusieurs appareils pour augmenter vos revenus.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="bg-white p-4 rounded-[20px] shadow-card border border-gray-50">
-            <p className="text-gray-500 text-xs font-medium mb-1">Revenus des packs</p>
-            <p className="text-mcdo-red font-bold text-xl">{stats?.totalEarned.toLocaleString('fr-FR') || 0} <span className="text-sm">XOF</span></p>
+        {/* Stats bar */}
+        <div className="flex gap-2">
+          <div className="flex-1 bg-white rounded-[14px] px-3 py-2.5 shadow-sm flex items-center gap-2">
+            <div className="w-7 h-7 bg-red-50 rounded-lg flex items-center justify-center shrink-0">
+              <ShoppingBag className="w-4 h-4 text-mcdo-red" />
+            </div>
+            <div>
+              <p className="font-black text-gray-900 text-base leading-none">
+                XOF {(stats?.totalEarned ?? 0).toLocaleString('fr-FR')}
+              </p>
+              <p className="text-gray-400 text-[10px]">Revenue réel</p>
+            </div>
           </div>
-          <div className="bg-white p-4 rounded-[20px] shadow-card border border-gray-50">
-            <p className="text-gray-500 text-xs font-medium mb-1">Packs actifs</p>
-            <p className="text-gray-900 font-bold text-xl">{products?.filter(p => p.status === 'active').length || 0}</p>
+          <div className="flex-1 bg-white rounded-[14px] px-3 py-2.5 shadow-sm flex items-center gap-2">
+            <div className="w-7 h-7 bg-red-50 rounded-lg flex items-center justify-center shrink-0">
+              <ShoppingBag className="w-4 h-4 text-gray-500" />
+            </div>
+            <div>
+              <p className="font-black text-gray-900 text-base leading-none">{products?.length ?? 0}</p>
+              <p className="text-gray-400 text-[10px]">Nombre total de produits</p>
+            </div>
           </div>
         </div>
 
-        {!products || products.length === 0 ? (
-          <div className="bg-white rounded-[24px] p-8 shadow-card border border-gray-50 text-center flex flex-col items-center mt-8">
-            <div className="w-40 h-40 mb-6 relative">
-              <img src="/images/empty-products.jpg" alt="Empty" className="w-full h-full object-cover rounded-[24px]" />
+        {/* Empty State */}
+        {(!products || products.length === 0) ? (
+          <div className="bg-white rounded-[18px] py-10 px-6 shadow-sm flex flex-col items-center text-center">
+            <div className="w-20 h-20 rounded-[20px] overflow-hidden mb-4 shadow-sm">
+              <img src="/images/empty-products.jpg" alt="empty" className="w-full h-full object-cover" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Aucun produit actif</h3>
-            <p className="text-gray-500 font-medium mb-8">
-              Vous n'avez pas encore investi dans nos packs McDonald's. Commencez à générer des revenus dès aujourd'hui.
+            <p className="font-black text-gray-900 text-base mb-1">Aucun produit pour le moment</p>
+            <p className="text-gray-400 text-xs mb-4 leading-relaxed">
+              Commencez à investir pour générer plus de revenus.
             </p>
             <Link href="/products">
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                className="w-full h-[58px] gradient-red text-white font-bold rounded-[18px] shadow-mcdo"
-              >
-                Commencer à investir
-              </motion.button>
+              <button className="gradient-red text-white font-bold px-6 py-2.5 rounded-[12px] text-sm shadow-mcdo">
+                Voir les produits
+              </button>
             </Link>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-2.5">
             {products.map((product) => {
               const progress = Math.min(100, (product.earnedSoFar / product.totalReturn) * 100);
               const isActive = product.status === 'active';
-              
               return (
-                <motion.div 
+                <motion.div
                   key={product.id}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-white rounded-[24px] p-4 shadow-card border border-gray-50"
+                  className="bg-white rounded-[18px] p-3 shadow-sm border border-gray-50"
                 >
-                  <div className="flex justify-between items-start mb-3">
-                    <div className="flex gap-3">
-                      <div className="w-12 h-12 rounded-xl overflow-hidden shadow-sm">
-                        <img src={product.imageUrl} alt={product.productName} className="w-full h-full object-cover" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-gray-900">{product.productName}</h3>
-                        <p className="text-xs text-gray-500 font-medium">Acheté le {new Date(product.purchaseDate).toLocaleDateString('fr-FR')}</p>
-                      </div>
+                  <div className="flex gap-3 items-start mb-3">
+                    <div className="w-14 h-14 rounded-[12px] overflow-hidden shrink-0">
+                      <img src={product.imageUrl} alt={product.productName} className="w-full h-full object-cover" />
                     </div>
-                    <div className={`px-2.5 py-1 rounded-lg text-xs font-bold ${isActive ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-500'}`}>
-                      {isActive ? 'Actif' : 'Terminé'}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-0.5">
+                        <p className="font-black text-gray-900 text-sm truncate">{product.productName}</p>
+                        <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ml-1 shrink-0 ${isActive ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-500'}`}>
+                          {isActive ? 'Actif' : 'Terminé'}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-gray-400">Acheté le {new Date(product.purchaseDate).toLocaleDateString('fr-FR')}</p>
+                      <div className="flex gap-3 mt-1 text-[11px]">
+                        <span className="text-gray-500">Quotidien: <span className="font-bold text-gray-800">{product.dailyReturn.toLocaleString('fr-FR')}</span></span>
+                        <span className="text-mcdo-red font-bold">{product.earnedSoFar.toLocaleString('fr-FR')} / {product.totalReturn.toLocaleString('fr-FR')} XOF</span>
+                      </div>
                     </div>
                   </div>
-
-                  <div className="bg-[#F6F7FB] rounded-[16px] p-3 mb-4 flex justify-between">
-                    <div>
-                      <p className="text-[10px] text-gray-500 font-medium uppercase mb-0.5">Revenu Quotidien</p>
-                      <p className="font-bold text-gray-900">{product.dailyReturn.toLocaleString('fr-FR')} XOF</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-[10px] text-gray-500 font-medium uppercase mb-0.5">Gagné / Total</p>
-                      <p className="font-bold text-mcdo-red">{product.earnedSoFar.toLocaleString('fr-FR')} <span className="text-gray-400 font-normal">/ {product.totalReturn.toLocaleString('fr-FR')}</span></p>
-                    </div>
-                  </div>
-
                   <div>
-                    <div className="flex justify-between text-xs font-semibold mb-1.5">
-                      <span className="text-gray-500">Progression</span>
+                    <div className="flex justify-between text-[10px] font-semibold mb-1">
+                      <span className="text-gray-400">Progression</span>
                       <span className="text-mcdo-red">{progress.toFixed(1)}%</span>
                     </div>
-                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                      <motion.div 
+                    <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                      <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
-                        transition={{ duration: 1, ease: "easeOut" }}
+                        transition={{ duration: 0.8 }}
                         className="h-full gradient-red rounded-full"
                       />
                     </div>
