@@ -1,22 +1,28 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: McDonald's Investment Platform API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
-    description: Health operations
+  - name: auth
+  - name: user
+  - name: products
+  - name: my-products
+  - name: missions
+  - name: team
+  - name: transactions
+  - name: checkin
+  - name: bank-accounts
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +30,598 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /auth/register:
+    post:
+      operationId: register
+      tags: [auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterInput"
+      responses:
+        "201":
+          description: Registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          description: Bad request
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginInput"
+      responses:
+        "200":
+          description: Logged in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Unauthorized
+
+  /user/profile:
+    get:
+      operationId: getProfile
+      tags: [user]
+      responses:
+        "200":
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+
+  /user/stats:
+    get:
+      operationId: getUserStats
+      tags: [user]
+      responses:
+        "200":
+          description: Stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserStats"
+
+  /products:
+    get:
+      operationId: getProducts
+      tags: [products]
+      responses:
+        "200":
+          description: Product list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+
+  /products/{id}:
+    get:
+      operationId: getProduct
+      tags: [products]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+
+  /products/{id}/purchase:
+    post:
+      operationId: purchaseProduct
+      tags: [products]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "201":
+          description: Purchased
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProduct"
+
+  /my-products:
+    get:
+      operationId: getMyProducts
+      tags: [my-products]
+      responses:
+        "200":
+          description: User products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserProduct"
+
+  /missions:
+    get:
+      operationId: getMissions
+      tags: [missions]
+      responses:
+        "200":
+          description: Missions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MissionsResponse"
+
+  /team:
+    get:
+      operationId: getTeam
+      tags: [team]
+      responses:
+        "200":
+          description: Team data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamResponse"
+
+  /transactions:
+    get:
+      operationId: getTransactions
+      tags: [transactions]
+      responses:
+        "200":
+          description: Transaction list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Transaction"
+
+  /transactions/recharge-history:
+    get:
+      operationId: getRechargeHistory
+      tags: [transactions]
+      responses:
+        "200":
+          description: Recharge history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Transaction"
+
+  /transactions/withdraw-history:
+    get:
+      operationId: getWithdrawHistory
+      tags: [transactions]
+      responses:
+        "200":
+          description: Withdrawal history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Transaction"
+
+  /transactions/recharge:
+    post:
+      operationId: recharge
+      tags: [transactions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RechargeInput"
+      responses:
+        "201":
+          description: Recharge submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+
+  /transactions/withdraw:
+    post:
+      operationId: withdraw
+      tags: [transactions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WithdrawInput"
+      responses:
+        "201":
+          description: Withdrawal submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+
+  /checkin/status:
+    get:
+      operationId: getCheckinStatus
+      tags: [checkin]
+      responses:
+        "200":
+          description: Checkin status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CheckinStatus"
+
+  /checkin:
+    post:
+      operationId: doCheckin
+      tags: [checkin]
+      responses:
+        "200":
+          description: Checkin done
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CheckinResult"
+        "400":
+          description: Already checked in
+
+  /bank-accounts:
+    get:
+      operationId: getBankAccounts
+      tags: [bank-accounts]
+      responses:
+        "200":
+          description: Bank account list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BankAccount"
+    post:
+      operationId: addBankAccount
+      tags: [bank-accounts]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BankAccountInput"
+      responses:
+        "201":
+          description: Added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankAccount"
+
+  /bank-accounts/{id}:
+    delete:
+      operationId: deleteBankAccount
+      tags: [bank-accounts]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
 components:
   schemas:
     HealthStatus:
       type: object
+      required: [status]
       properties:
         status:
           type: string
-      required:
-        - status
 
+    RegisterInput:
+      type: object
+      required: [phone, password, countryCode]
+      properties:
+        phone:
+          type: string
+        password:
+          type: string
+        countryCode:
+          type: string
+        referralCode:
+          type: ["string", "null"]
+
+    LoginInput:
+      type: object
+      required: [phone, password]
+      properties:
+        phone:
+          type: string
+        password:
+          type: string
+
+    AuthResponse:
+      type: object
+      required: [token, user]
+      properties:
+        token:
+          type: string
+        user:
+          $ref: "#/components/schemas/UserProfile"
+
+    UserProfile:
+      type: object
+      required: [id, phone, countryCode, balance, totalEarned, referralCode, vipLevel, createdAt]
+      properties:
+        id:
+          type: integer
+        phone:
+          type: string
+        countryCode:
+          type: string
+        balance:
+          type: number
+        totalEarned:
+          type: number
+        referralCode:
+          type: string
+        referralLink:
+          type: string
+        vipLevel:
+          type: integer
+        createdAt:
+          type: string
+
+    UserStats:
+      type: object
+      required: [balance, totalEarned, totalWithdrawn, dailyEarnings, activeProducts, totalInvited, totalRewards]
+      properties:
+        balance:
+          type: number
+        totalEarned:
+          type: number
+        totalWithdrawn:
+          type: number
+        dailyEarnings:
+          type: number
+        activeProducts:
+          type: integer
+        totalInvited:
+          type: integer
+        totalRewards:
+          type: number
+
+    Product:
+      type: object
+      required: [id, name, price, durationDays, dailyReturn, totalReturn, imageUrl, category, description]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        durationDays:
+          type: integer
+        dailyReturn:
+          type: number
+        totalReturn:
+          type: number
+        imageUrl:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        featured:
+          type: boolean
+
+    UserProduct:
+      type: object
+      required: [id, productId, productName, purchaseDate, expiryDate, dailyReturn, totalReturn, earnedSoFar, status, imageUrl]
+      properties:
+        id:
+          type: integer
+        productId:
+          type: integer
+        productName:
+          type: string
+        purchaseDate:
+          type: string
+        expiryDate:
+          type: string
+        dailyReturn:
+          type: number
+        totalReturn:
+          type: number
+        earnedSoFar:
+          type: number
+        status:
+          type: string
+        imageUrl:
+          type: string
+
+    MissionLevel:
+      type: object
+      required: [level, name, description, commission, required, current, objective, rewards, status]
+      properties:
+        level:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        commission:
+          type: number
+        required:
+          type: integer
+        current:
+          type: integer
+        objective:
+          type: integer
+        rewards:
+          type: number
+        status:
+          type: string
+
+    MissionsResponse:
+      type: object
+      required: [totalRewards, totalCount, levels]
+      properties:
+        totalRewards:
+          type: number
+        totalCount:
+          type: integer
+        levels:
+          type: array
+          items:
+            $ref: "#/components/schemas/MissionLevel"
+
+    VipLevel:
+      type: object
+      required: [commission, users, rewards]
+      properties:
+        commission:
+          type: number
+        users:
+          type: integer
+        rewards:
+          type: number
+
+    TeamResponse:
+      type: object
+      required: [referralCode, referralLink, totalInvited, totalRewards, vip1, vip2, vip3]
+      properties:
+        referralCode:
+          type: string
+        referralLink:
+          type: string
+        totalInvited:
+          type: integer
+        totalRewards:
+          type: number
+        vip1:
+          $ref: "#/components/schemas/VipLevel"
+        vip2:
+          $ref: "#/components/schemas/VipLevel"
+        vip3:
+          $ref: "#/components/schemas/VipLevel"
+
+    Transaction:
+      type: object
+      required: [id, type, amount, status, createdAt, description]
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+        amount:
+          type: number
+        status:
+          type: string
+        createdAt:
+          type: string
+        description:
+          type: string
+
+    RechargeInput:
+      type: object
+      required: [amount, method]
+      properties:
+        amount:
+          type: number
+        method:
+          type: string
+        countryCode:
+          type: ["string", "null"]
+        proofUrl:
+          type: ["string", "null"]
+
+    WithdrawInput:
+      type: object
+      required: [amount, bankAccountId]
+      properties:
+        amount:
+          type: number
+        bankAccountId:
+          type: integer
+
+    CheckinStatus:
+      type: object
+      required: [checkedInToday, streak, totalRewards, dailyReward, nextCheckinAt]
+      properties:
+        checkedInToday:
+          type: boolean
+        streak:
+          type: integer
+        totalRewards:
+          type: number
+        dailyReward:
+          type: number
+        nextCheckinAt:
+          type: ["string", "null"]
+
+    CheckinResult:
+      type: object
+      required: [reward, streak, totalRewards, message]
+      properties:
+        reward:
+          type: number
+        streak:
+          type: integer
+        totalRewards:
+          type: number
+        message:
+          type: string
+
+    BankAccount:
+      type: object
+      required: [id, bankName, accountNumber, accountHolder, isDefault, createdAt]
+      properties:
+        id:
+          type: integer
+        bankName:
+          type: string
+        accountNumber:
+          type: string
+        accountHolder:
+          type: string
+        isDefault:
+          type: boolean
+        createdAt:
+          type: string
+
+    BankAccountInput:
+      type: object
+      required: [bankName, accountNumber, accountHolder]
+      properties:
+        bankName:
+          type: string
+        accountNumber:
+          type: string
+        accountHolder:
+          type: string
+        isDefault:
+          type: boolean
