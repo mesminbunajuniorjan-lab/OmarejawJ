@@ -89,30 +89,45 @@ function InputField({
   );
 }
 
-function Checkbox({ checked, onChange, label, link }: { checked: boolean; onChange: () => void; label: string; link?: string }) {
+function Checkbox({
+  checked,
+  onChange,
+  label,
+  link,
+}: {
+  checked: boolean;
+  onChange: () => void;
+  label: string;
+  link?: string;
+}) {
   return (
-    <label className="flex items-start gap-3 cursor-pointer" onClick={onChange}>
+    <div className="flex items-start gap-3 cursor-pointer" onClick={onChange}>
       <div
-        className="w-5 h-5 rounded-[6px] flex items-center justify-center mt-0.5 flex-shrink-0"
         style={{
+          width: 20,
+          height: 20,
+          borderRadius: 6,
           background: checked ? P1 : 'white',
           border: checked ? `2px solid ${P1}` : '2px solid #D1D5DB',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           transition: 'all 0.2s',
+          flexShrink: 0,
+          marginTop: 2,
         }}
       >
         {checked && (
           <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-            <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         )}
       </div>
       <span className="text-[13px] font-medium text-[#374151] leading-snug select-none">
         {label}{' '}
-        {link && (
-          <span className="font-semibold" style={{ color: P1 }}>{link}</span>
-        )}
+        {link && <span className="font-semibold" style={{ color: P1 }}>{link}</span>}
       </span>
-    </label>
+    </div>
   );
 }
 
@@ -158,86 +173,145 @@ export default function Register() {
 
   return (
     <div
-      className="min-h-[100dvh] bg-white flex flex-col relative"
-      style={{ fontFamily: 'Inter, sans-serif' }}
+      className="min-h-[100dvh] flex flex-col relative"
+      style={{ fontFamily: 'Inter, sans-serif', background: 'white' }}
     >
-      {/* ── HERO HEADER (restaurant photo + food items) ── */}
-      <div className="relative h-[230px] overflow-hidden flex-shrink-0">
-        {/* Restaurant background — floutée HD */}
+      {/* ═══════════════════════════════════════════════════════════
+          HERO HEADER — restaurant photo floutée + images food
+          ═══════════════════════════════════════════════════════════ */}
+      <div
+        className="relative flex-shrink-0 overflow-hidden"
+        style={{ height: 220 }}
+      >
+        {/* ── Restaurant background floutée ── */}
         <img
           src="/images/mcdo-restaurant.jpg"
           alt=""
-          className="absolute object-cover object-center"
           style={{
-            inset: '-20px',
-            width: 'calc(100% + 40px)',
-            height: 'calc(100% + 40px)',
-            opacity: 0.25,
-            filter: 'blur(26px) saturate(0.6)',
+            position: 'absolute',
+            inset: '-24px',
+            width: 'calc(100% + 48px)',
+            height: 'calc(100% + 48px)',
+            objectFit: 'cover',
+            objectPosition: 'center 40%',
+            opacity: 0.30,
+            filter: 'blur(20px) saturate(0.7)',
           }}
         />
-        {/* Dégradé lavande → blanc pour lisibilité */}
+        {/* Overlay lavande → blanc */}
         <div
-          className="absolute inset-0"
           style={{
+            position: 'absolute',
+            inset: 0,
             background:
-              'linear-gradient(180deg, rgba(235,232,255,0.55) 0%, rgba(245,243,255,0.75) 50%, rgba(255,255,255,0.97) 100%)',
+              'linear-gradient(180deg, rgba(232,228,255,0.45) 0%, rgba(240,237,255,0.60) 55%, rgba(255,255,255,1) 100%)',
           }}
         />
 
-        {/* Food items — right side */}
-        <div className="absolute right-4 top-3 flex items-end gap-2">
-          {/* Bag */}
-          <img
-            src="/images/empty-products.jpg"
-            alt="Sac"
-            className="w-16 h-20 object-cover rounded-xl"
-            style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }}
-          />
-          {/* Burger */}
-          <img
-            src="/images/pack-bigmac.jpg"
-            alt="Burger"
-            className="w-20 h-20 object-cover rounded-xl"
-            style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }}
-          />
-          {/* Fries */}
-          <img
-            src="/images/pack-classic.jpg"
-            alt="Frites"
-            className="w-14 h-16 object-cover rounded-xl"
-            style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }}
-          />
-        </div>
-
-        {/* McDonald's M logo badge */}
-        <div
-          className="absolute right-4 bottom-4 w-10 h-10 rounded-xl flex items-center justify-center"
-          style={{ background: '#DA291C', boxShadow: '0 4px 12px rgba(218,41,28,0.4)' }}
-        >
-          <svg viewBox="0 0 24 24" width="22" height="22" fill={YLW}>
-            <path d="M2 20V6.5C2 4 3.8 2 6 2s3.5 1.6 4 3.8C10.5 3.6 11.8 2 14 2s4 2 4 4.5V20h-3.5V8c0-.8-.6-1.5-1.5-1.5s-1.5.7-1.5 1.5v12h-2V8c0-.8-.6-1.5-1.5-1.5S6.5 7.2 6.5 8v12H2z"/>
-          </svg>
-        </div>
-
-        {/* Back button */}
+        {/* ── Bouton retour ── */}
         <button
           onClick={() => setLocation('/login')}
-          className="absolute top-4 left-4 w-9 h-9 rounded-full bg-white flex items-center justify-center z-10"
+          className="absolute top-4 left-4 w-9 h-9 rounded-full bg-white flex items-center justify-center z-20"
           style={{ boxShadow: '0 2px 12px rgba(72,72,120,0.14)', border: '1px solid #ECECF4' }}
         >
           <ArrowLeft className="w-4 h-4 text-[#374151]" strokeWidth={2} />
         </button>
 
-        {/* App icon — centered left area */}
-        <div className="absolute left-6 bottom-4">
+        {/* ── Food images — droite ── */}
+        <div
+          className="absolute z-10"
+          style={{ top: 8, right: 8, display: 'flex', alignItems: 'flex-end', gap: 6 }}
+        >
+          {/* Sac McDonald's */}
+          <img
+            src="/images/empty-products.jpg"
+            alt="Sac"
+            style={{
+              width: 62,
+              height: 78,
+              objectFit: 'cover',
+              objectPosition: 'center',
+              borderRadius: 12,
+              boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
+            }}
+          />
+          {/* Burger Big Mac */}
+          <img
+            src="/images/pack-bigmac.jpg"
+            alt="Burger"
+            style={{
+              width: 82,
+              height: 82,
+              objectFit: 'cover',
+              objectPosition: 'center',
+              borderRadius: 14,
+              boxShadow: '0 4px 14px rgba(0,0,0,0.18)',
+            }}
+          />
+          {/* Frites */}
+          <img
+            src="/images/pack-classic.jpg"
+            alt="Frites"
+            style={{
+              width: 62,
+              height: 72,
+              objectFit: 'cover',
+              objectPosition: 'top center',
+              borderRadius: 12,
+              boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
+            }}
+          />
+          {/* Cup Coca-Cola — à gauche des frites (dans la maquette c'est à gauche du burger) */}
+        </div>
+
+        {/* Gobelet Coca-Cola — positionné entre burger et frites */}
+        <img
+          src="/images/mcdo-cup.png"
+          alt="Coca-Cola"
+          className="absolute z-10"
+          style={{
+            bottom: 30,
+            right: 70,
+            width: 50,
+            height: 65,
+            objectFit: 'contain',
+            objectPosition: 'bottom',
+            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.18))',
+          }}
+        />
+
+        {/* Badge M McDonald's — coin bas-droit */}
+        <div
+          className="absolute z-20"
+          style={{
+            bottom: 16,
+            right: 12,
+            width: 38,
+            height: 38,
+            borderRadius: 10,
+            background: '#DA291C',
+            boxShadow: '0 4px 12px rgba(218,41,28,0.40)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <svg viewBox="0 0 24 24" width="20" height="20" fill={YLW}>
+            <path d="M2 20V6.5C2 4 3.8 2 6 2s3.5 1.6 4 3.8C10.5 3.6 11.8 2 14 2s4 2 4 4.5V20h-3.5V8c0-.8-.6-1.5-1.5-1.5s-1.5.7-1.5 1.5v12h-2V8c0-.8-.6-1.5-1.5-1.5S6.5 7.2 6.5 8v12H2z" />
+          </svg>
+        </div>
+
+        {/* App icon — bas gauche */}
+        <div className="absolute z-10" style={{ bottom: 12, left: 20 }}>
           <AppIcon size={72} />
         </div>
       </div>
 
-      {/* ── FORM AREA ── */}
-      <div className="flex-1 px-6 pt-5 pb-8 overflow-y-auto">
-        {/* Title */}
+      {/* ═══════════════════════════════════════════════════════════
+          FORMULAIRE
+          ═══════════════════════════════════════════════════════════ */}
+      <div className="flex-1 px-5 pt-5 pb-8 overflow-y-auto">
+        {/* Titre */}
         <div className="mb-5">
           <h1 className="text-[28px] font-black text-[#111827] leading-tight">
             Créer un compte <span>✨</span>
@@ -248,8 +322,8 @@ export default function Register() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
-          {/* Country + phone row */}
-          <div className="flex gap-3">
+          {/* Pays + téléphone */}
+          <div className="flex gap-2">
             <button
               type="button"
               onClick={() => setShowCountrySheet(true)}
@@ -259,14 +333,11 @@ export default function Register() {
               <span className="text-[20px] leading-none">{selectedCountry.flag}</span>
               <ChevronDown className="w-3.5 h-3.5 text-[#6B7280]" strokeWidth={2.5} />
             </button>
-
             <div
               className="flex-1 flex items-center h-[54px] rounded-2xl px-4 gap-2 bg-white"
               style={{ border: '1.5px solid #ECECF4', boxShadow: '0 2px 8px rgba(72,72,120,0.05)' }}
             >
-              <span className="text-[13px] font-semibold text-[#374151] flex-shrink-0">
-                {selectedCountry.code}
-              </span>
+              <span className="text-[13px] font-semibold text-[#374151] flex-shrink-0">{selectedCountry.code}</span>
               <div className="w-px h-5 bg-[#ECECF4]" />
               <input
                 type="tel"
@@ -279,7 +350,6 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Password */}
           <InputField
             icon={Lock}
             placeholder="Mot de passe"
@@ -293,7 +363,6 @@ export default function Register() {
             }
           />
 
-          {/* Confirm password */}
           <InputField
             icon={Lock}
             placeholder="Confirmer le mot de passe"
@@ -307,7 +376,6 @@ export default function Register() {
             }
           />
 
-          {/* Referral code */}
           <InputField
             icon={Gift}
             iconColor={YLW}
@@ -331,15 +399,15 @@ export default function Register() {
             />
           </div>
 
-          {/* Submit */}
+          {/* Bouton inscription */}
           <motion.button
             whileTap={{ scale: 0.97 }}
             type="submit"
             disabled={registerMutation.isPending}
-            className="w-full h-[58px] rounded-[18px] flex items-center justify-between px-6 font-bold text-[16px] text-white mt-2"
+            className="w-full h-[58px] rounded-[18px] flex items-center justify-between px-6 font-bold text-[16px] text-white mt-1"
             style={{
               background: `linear-gradient(135deg, ${P1} 0%, ${P2} 100%)`,
-              boxShadow: `0 8px 24px rgba(106,61,240,0.38)`,
+              boxShadow: `0 8px 26px rgba(106,61,240,0.40)`,
             }}
           >
             <span className="flex-1 text-center">
@@ -349,9 +417,7 @@ export default function Register() {
                 "S'inscrire"
               )}
             </span>
-            {!registerMutation.isPending && (
-              <ArrowRight className="w-5 h-5 flex-shrink-0" strokeWidth={2.5} />
-            )}
+            {!registerMutation.isPending && <ArrowRight className="w-5 h-5" strokeWidth={2.5} />}
           </motion.button>
         </form>
 
@@ -359,15 +425,13 @@ export default function Register() {
           <p className="text-[13px] font-medium text-[#6B7280]">
             Déjà un compte ?{' '}
             <Link href="/login">
-              <span className="font-bold" style={{ color: P1 }}>
-                Se connecter
-              </span>
+              <span className="font-bold" style={{ color: P1 }}>Se connecter</span>
             </Link>
           </p>
         </div>
       </div>
 
-      {/* ── COUNTRY BOTTOM SHEET ── */}
+      {/* ── Bottom sheet pays ── */}
       <AnimatePresence>
         {showCountrySheet && (
           <>
@@ -388,18 +452,15 @@ export default function Register() {
               <div className="p-4 flex justify-center">
                 <div className="w-10 h-1 bg-[#ECECF4] rounded-full" />
               </div>
-              <div className="px-4 pb-2">
+              <div className="px-5 pb-2">
                 <h3 className="text-[17px] font-bold text-[#111827]">Sélectionner un pays</h3>
               </div>
-              <div className="overflow-y-auto px-4 pb-6">
+              <div className="overflow-y-auto px-5 pb-8">
                 {COUNTRIES.map((country) => (
                   <button
                     key={country.code}
-                    onClick={() => {
-                      setCountryCode(country.code);
-                      setShowCountrySheet(false);
-                    }}
-                    className="w-full flex items-center justify-between py-3 border-b border-[#F6F7FB] last:border-0"
+                    onClick={() => { setCountryCode(country.code); setShowCountrySheet(false); }}
+                    className="w-full flex items-center justify-between py-3.5 border-b border-[#F6F7FB] last:border-0"
                   >
                     <div className="flex items-center gap-3">
                       <span className="text-2xl">{country.flag}</span>
