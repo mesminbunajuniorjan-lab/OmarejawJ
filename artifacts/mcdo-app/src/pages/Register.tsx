@@ -217,93 +217,103 @@ export default function Register() {
           <ArrowLeft className="w-4 h-4 text-[#374151]" strokeWidth={2} />
         </button>
 
-        {/* ── Food images — droite ── */}
+        {/* ── App icon — milieu gauche (aligné verticalement au centre de l'en-tête) ── */}
+        <div className="absolute z-10" style={{ top: '50%', left: 20, transform: 'translateY(-50%)' }}>
+          <AppIcon size={76} />
+        </div>
+
+        {/* ── Cluster food — droite ── */}
+        {/* Structure maquette : sac (bas-gauche), burger (haut-centre), frites (bas-droit)
+            + gobelet Coca sous les frites + badge "m" chevauchant le coin bas-droit du cluster */}
         <div
           className="absolute z-10"
-          style={{ top: 8, right: 8, display: 'flex', alignItems: 'flex-end', gap: 6 }}
+          style={{ top: 10, right: 10, width: 210, height: 160 }}
         >
-          {/* Sac McDonald's */}
+          {/* Sac McDonald's — bas-gauche du cluster */}
           <img
             src="/images/empty-products.jpg"
             alt="Sac"
             style={{
-              width: 62,
-              height: 78,
+              position: 'absolute',
+              left: 0,
+              bottom: 32,
+              width: 68,
+              height: 82,
               objectFit: 'cover',
               objectPosition: 'center',
               borderRadius: 12,
-              boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
+              boxShadow: '0 4px 14px rgba(0,0,0,0.18)',
             }}
           />
-          {/* Burger Big Mac */}
+          {/* Burger Big Mac — haut-centre */}
           <img
             src="/images/pack-bigmac.jpg"
             alt="Burger"
             style={{
-              width: 82,
-              height: 82,
+              position: 'absolute',
+              left: 60,
+              top: 0,
+              width: 90,
+              height: 90,
               objectFit: 'cover',
               objectPosition: 'center',
-              borderRadius: 14,
-              boxShadow: '0 4px 14px rgba(0,0,0,0.18)',
+              borderRadius: 16,
+              boxShadow: '0 4px 16px rgba(0,0,0,0.20)',
+              zIndex: 2,
             }}
           />
-          {/* Frites */}
+          {/* Frites — droite, légèrement plus bas */}
           <img
             src="/images/pack-classic.jpg"
             alt="Frites"
             style={{
-              width: 62,
-              height: 72,
+              position: 'absolute',
+              right: 0,
+              top: 20,
+              width: 68,
+              height: 80,
               objectFit: 'cover',
               objectPosition: 'top center',
               borderRadius: 12,
-              boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
+              boxShadow: '0 4px 14px rgba(0,0,0,0.16)',
             }}
           />
-          {/* Cup Coca-Cola — à gauche des frites (dans la maquette c'est à gauche du burger) */}
-        </div>
-
-        {/* Gobelet Coca-Cola — positionné entre burger et frites */}
-        <img
-          src="/images/mcdo-cup.png"
-          alt="Coca-Cola"
-          className="absolute z-10"
-          style={{
-            bottom: 30,
-            right: 70,
-            width: 50,
-            height: 65,
-            objectFit: 'contain',
-            objectPosition: 'bottom',
-            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.18))',
-          }}
-        />
-
-        {/* Badge M McDonald's — coin bas-droit */}
-        <div
-          className="absolute z-20"
-          style={{
-            bottom: 16,
-            right: 12,
-            width: 38,
-            height: 38,
-            borderRadius: 10,
-            background: '#DA291C',
-            boxShadow: '0 4px 12px rgba(218,41,28,0.40)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <svg viewBox="0 0 24 24" width="20" height="20" fill={YLW}>
-            <path d="M2 20V6.5C2 4 3.8 2 6 2s3.5 1.6 4 3.8C10.5 3.6 11.8 2 14 2s4 2 4 4.5V20h-3.5V8c0-.8-.6-1.5-1.5-1.5s-1.5.7-1.5 1.5v12h-2V8c0-.8-.6-1.5-1.5-1.5S6.5 7.2 6.5 8v12H2z" />
-          </svg>
-        </div>
-
-        {/* App icon — bas gauche */}
-        <div className="absolute z-10" style={{ bottom: 12, left: 20 }}>
-          <AppIcon size={72} />
+          {/* Gobelet Coca-Cola — sous les frites, droite */}
+          <img
+            src="/images/mcdo-cup.png"
+            alt="Coca-Cola"
+            style={{
+              position: 'absolute',
+              right: 14,
+              bottom: 0,
+              width: 44,
+              height: 58,
+              objectFit: 'contain',
+              objectPosition: 'bottom',
+              filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.20))',
+            }}
+          />
+          {/* Badge "m" McDonald's — chevauchant le coin bas-droit du cluster (sur les frites) */}
+          <div
+            style={{
+              position: 'absolute',
+              right: -6,
+              bottom: 52,
+              width: 36,
+              height: 36,
+              borderRadius: 10,
+              background: '#DA291C',
+              boxShadow: '0 4px 12px rgba(218,41,28,0.45)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 5,
+            }}
+          >
+            <svg viewBox="0 0 24 24" width="20" height="20" fill={YLW}>
+              <path d="M2 20V6.5C2 4 3.8 2 6 2s3.5 1.6 4 3.8C10.5 3.6 11.8 2 14 2s4 2 4 4.5V20h-3.5V8c0-.8-.6-1.5-1.5-1.5s-1.5.7-1.5 1.5v12h-2V8c0-.8-.6-1.5-1.5-1.5S6.5 7.2 6.5 8v12H2z" />
+            </svg>
+          </div>
         </div>
       </div>
 
