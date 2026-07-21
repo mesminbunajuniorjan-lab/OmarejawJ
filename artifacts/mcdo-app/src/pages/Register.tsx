@@ -163,17 +163,26 @@ export default function Register() {
     >
       {/* ── HERO HEADER (restaurant photo + food items) ── */}
       <div className="relative h-[230px] overflow-hidden flex-shrink-0">
-        {/* Restaurant background */}
+        {/* Restaurant background — floutée HD */}
         <img
           src="/images/mcdo-restaurant.jpg"
           alt=""
-          className="absolute inset-0 w-full h-full object-cover object-center"
-          style={{ opacity: 0.18, filter: 'saturate(0.5)' }}
+          className="absolute object-cover object-center"
+          style={{
+            inset: '-20px',
+            width: 'calc(100% + 40px)',
+            height: 'calc(100% + 40px)',
+            opacity: 0.25,
+            filter: 'blur(26px) saturate(0.6)',
+          }}
         />
-        {/* Lavender tint overlay */}
+        {/* Dégradé lavande → blanc pour lisibilité */}
         <div
           className="absolute inset-0"
-          style={{ background: 'linear-gradient(180deg, rgba(235,230,255,0.7) 0%, rgba(255,255,255,0.95) 100%)' }}
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(235,232,255,0.55) 0%, rgba(245,243,255,0.75) 50%, rgba(255,255,255,0.97) 100%)',
+          }}
         />
 
         {/* Food items — right side */}

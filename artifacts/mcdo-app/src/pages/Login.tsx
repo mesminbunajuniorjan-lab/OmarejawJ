@@ -109,18 +109,31 @@ export default function Login() {
       className="min-h-[100dvh] relative overflow-hidden bg-white flex flex-col"
       style={{ fontFamily: 'Inter, sans-serif' }}
     >
-      {/* ── DECORATIVE RESTAURANT PHOTO ── */}
-      <div className="absolute top-[130px] left-0 right-0 h-[200px] overflow-hidden pointer-events-none select-none">
+      {/* ── RESTAURANT PHOTO FLOUE (derrière titre) ── */}
+      <div
+        className="absolute left-0 right-0 overflow-hidden pointer-events-none select-none"
+        style={{ top: 120, height: 220 }}
+      >
+        {/* Image agrandie pour éviter les bords flous visibles */}
         <img
           src="/images/mcdo-restaurant.jpg"
           alt=""
-          className="w-full h-full object-cover object-center"
-          style={{ opacity: 0.12, filter: 'grayscale(30%)' }}
+          className="absolute object-cover object-center"
+          style={{
+            inset: '-20px',
+            width: 'calc(100% + 40px)',
+            height: 'calc(100% + 40px)',
+            opacity: 0.22,
+            filter: 'blur(26px) grayscale(20%)',
+          }}
         />
-        {/* fade to white at bottom */}
+        {/* Dégradé blanc pour lisibilité */}
         <div
           className="absolute inset-0"
-          style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0) 30%, #ffffff 100%)' }}
+          style={{
+            background:
+              'linear-gradient(to bottom, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0.95) 100%)',
+          }}
         />
       </div>
 
